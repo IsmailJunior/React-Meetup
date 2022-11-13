@@ -11,6 +11,7 @@ export { default as MeetupItem } from './components/meetups/MeetupItem'
 export { default as MeetupList } from './components/meetups/MeetupList'
 export { default as Card } from './components/interface/Card'
 export { default as Layout } from './components/layout/Layout'
+export { default as NewMeetupForm } from "./components/meetups/NewMeetupForm";
 
 
 
