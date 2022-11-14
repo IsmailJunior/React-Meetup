@@ -18,7 +18,7 @@ export default function MainNavigation ()
             <Link to="/favorites">Favorites</Link>
           </li>
           <li>
-            <Link to="/auth">Auth</Link>
+            <Link to="/auth">Login</Link>
           </li>
           <li>
             <Link to="/home">Home</Link>
