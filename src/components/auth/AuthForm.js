@@ -7,22 +7,18 @@ export default function AuthForm() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const api = "AIzaSyC20c5tIyNJc1pSe5lZwM4A6sEq6BfwGbQ";
-
+  let url;
   function switchAuthModeHandler() {
-    setIsLogin((prevState) => !prevState);
+    setIsLogin(prevState => !prevState);
   }
 
   function submitHandler(event) {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-
-    if (isLogin) {
-    } else {
-      fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${api}`,
-        {
+    const opts = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -32,17 +28,30 @@ export default function AuthForm() {
             password: enteredPassword,
             returnSecureToken: true,
           }),
-        }
-      ).then((res) => {
+    }
+    
+    setIsLoading(true);
+    if ( isLogin )
+    {
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${api}`
+    } else
+    {
+      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${api}`
+    }
+        fetch(url, opts).then(res => {
+        setIsLoading(false);
         if (res.ok) {
           return console.log(res);
         } else {
-          return res.json().then((data) => {
-            console.log(data);
+          return res.json().then(data => {
+            let errorMessage = "Auth Failed";
+            if (data && data.error && data.error.message) {
+              errorMessage = data.error.message;
+            }
+            alert(errorMessage);
           });
         }
       });
-    }
   }
 
   return (
@@ -55,20 +64,12 @@ export default function AuthForm() {
         </div>
         <div className={classes.control}>
           <label htmlFor="password">Your Password</label>
-          <input
-            type="password"
-            id="password"
-            required
-            ref={passwordInputRef}
-          />
+          <input type="password" id="password" required ref={passwordInputRef}/>
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? "Login" : "Create Account"}</button>
-          <button
-            type="button"
-            className={classes.toggle}
-            onClick={switchAuthModeHandler}
-          >
+          {!isLoading && (<button>{isLogin ? "Login" : "Create Account"}</button>)}
+          {isLoading && <button>Loading...</button>}
+          <button type="button" className={classes.toggle} onClick={switchAuthModeHandler}>
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
         </div>
