@@ -41,17 +41,20 @@ export default function AuthForm() {
         fetch(url, opts).then(res => {
         setIsLoading(false);
         if (res.ok) {
-          return console.log(res);
+          return res.json(res);
         } else {
           return res.json().then(data => {
             let errorMessage = "Auth Failed";
             if (data && data.error && data.error.message) {
               errorMessage = data.error.message;
             }
-            alert(errorMessage);
+            throw new Error(errorMessage)
           });
         }
-      });
+        } ).then( data => console.log(data) ).catch( err =>
+        {
+          alert( err.message );
+      })
   }
 
   return (
