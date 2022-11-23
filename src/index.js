@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom'
 import './index.css';
 import App from './App';
+import { FavoritesContextProvider } from './store/context';
 export {default as AllMeetups} from './pages/AllMeetups'
 export {default as NewMeetup} from './pages/NewMeetup'
 export {default as Favorites} from './pages/Favorites'
@@ -15,9 +16,12 @@ export { default as NewMeetupForm } from "./components/meetups/NewMeetupForm";
 
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    <FavoritesContextProvider>
     <BrowserRouter>
         <App />
     </BrowserRouter> 
+    </FavoritesContextProvider>
 );
