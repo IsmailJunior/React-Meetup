@@ -42,9 +42,23 @@
 }
 
 .badge {
-  background-color: #fd4141;
+  background-color: #f9b482;
   color: white;
   border-radius: 12px;
-  padding: 0 1rem;
+  padding: 0 0.6rem;
   margin-left: 0.5rem;
+}
+
+
+.actions {
+  text-align: center;
+}
+
+.actions button {
+  background: transparent;
+  border: none;
+  font-weight: larger;
+  font: inherit;
+  cursor: pointer;
+  color: black;
 }

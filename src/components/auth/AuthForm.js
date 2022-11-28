@@ -1,18 +1,21 @@
 /** @format */
 
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import classes from "./AuthForm.module.css";
+import AuthContext from '../../store/auth-context'
 
 export default function AuthForm() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [ isLoading, setIsLoading ] = useState( false );
+  const authCtx = useContext( AuthContext )
   const api = "AIzaSyC20c5tIyNJc1pSe5lZwM4A6sEq6BfwGbQ";
   let url;
   function switchAuthModeHandler() {
     setIsLogin(prevState => !prevState);
   }
+
 
   function submitHandler(event) {
     event.preventDefault();
@@ -51,7 +54,11 @@ export default function AuthForm() {
             throw new Error(errorMessage)
           });
         }
-        } ).then( data => console.log(data) ).catch( err =>
+        } ).then( data =>
+        {
+          authCtx.login( data.idToken );
+          console.log( data );
+        } ).catch( err =>
         {
           alert( err.message );
       })

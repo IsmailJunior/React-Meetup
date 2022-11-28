@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { FavoritesContextProvider } from './store/context';
+import { AuthContextProvider } from './store/auth-context';
 export { default as AllMeetups } from './pages/AllMeetups';
 export { default as NewMeetup } from './pages/NewMeetup';
 export { default as Favorites } from './pages/Favorites';
@@ -26,9 +27,11 @@ export { default as ProfilePage } from "./pages/ProfilePage";
 
 const root = ReactDOM.createRoot( document.getElementById( 'root' ) );
 root.render(
+    <AuthContextProvider>
     <FavoritesContextProvider>
         <BrowserRouter>
             <App />
         </BrowserRouter>
-    </FavoritesContextProvider>
+        </FavoritesContextProvider>
+    </AuthContextProvider>
 );
